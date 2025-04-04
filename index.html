@@ -36,6 +36,9 @@
             line-height: 1.6;
             min-height: 100vh;
             overflow-x: hidden;
+            /* Hardware acceleration for smoother animations */
+            transform: translateZ(0);
+            -webkit-font-smoothing: antialiased;
         }
 
         /* Critical CSS - Load first */
@@ -47,7 +50,8 @@
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(8px);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
         }
 
         .container {
@@ -79,6 +83,8 @@
             text-align: center;
             padding: 100px 20px 60px;
             position: relative;
+            /* Prevent layout shifts during animations */
+            overflow: hidden;
         }
 
         .hero h1 {
@@ -142,7 +148,7 @@
             .hero-content {
                 opacity: 0;
                 transform: translateY(20px);
-                animation: fadeInUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+                animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
             }
 
             @keyframes fadeInUp {
@@ -198,7 +204,7 @@
 
             .logo {
                 letter-spacing: 1px;
-                transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             }
 
             .logo:hover {
@@ -230,7 +236,7 @@
                 bottom: 0;
                 left: 0;
                 background-color: var(--accent-orange);
-                transition: width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+                transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             }
 
             nav a:hover::after {
@@ -283,7 +289,8 @@
                 position: relative;
                 overflow: hidden;
                 border: none;
-                transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                will-change: transform, box-shadow;
             }
 
             .download-btn:hover {
@@ -300,7 +307,7 @@
                 width: 100%;
                 height: 100%;
                 background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-                transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+                transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
             }
 
             .download-btn:hover::before {
@@ -360,7 +367,7 @@
                 height: 4px;
                 background: linear-gradient(90deg, var(--accent-orange), var(--primary-green));
                 border-radius: 2px;
-                transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             }
 
             .features h2:hover::after {
@@ -382,8 +389,9 @@
                 text-align: center;
                 backdrop-filter: blur(12px);
                 border: 1px solid rgba(255,255,255,0.1);
-                transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
                 cursor: default;
+                will-change: transform, box-shadow, background;
             }
 
             .feature-card:hover {
@@ -398,13 +406,14 @@
                 background: linear-gradient(45deg, var(--accent-orange) 0%, var(--primary-green) 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
-                transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
                 display: inline-block;
+                will-change: transform;
             }
 
             .feature-card:hover i {
                 transform: scale(1.2) rotate(5deg);
-                animation: bounce 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+                animation: bounce 0.6s cubic-bezier(0.22, 1, 0.36, 1);
                 text-shadow: 0 0 15px rgba(255, 127, 63, 0.4);
             }
 
@@ -457,6 +466,7 @@
             /* Floating animation for decorative elements */
             .floating {
                 animation: floating 3s ease-in-out infinite;
+                will-change: transform;
             }
 
             @keyframes floating {
@@ -474,6 +484,7 @@
                 left: 0;
                 z-index: -1;
                 overflow: hidden;
+                pointer-events: none;
             }
 
             .particle {
@@ -481,6 +492,7 @@
                 background: rgba(255, 255, 255, 0.1);
                 border-radius: 50%;
                 animation: float-particle 15s linear infinite;
+                will-change: transform, opacity;
             }
 
             @keyframes float-particle {
@@ -513,7 +525,7 @@
                 
                 nav ul.active {
                     display: flex;
-                    animation: slideDown 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+                    animation: slideDown 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
                 }
                 
                 @keyframes slideDown {
@@ -595,6 +607,25 @@
             ::-webkit-scrollbar-thumb:hover {
                 background: linear-gradient(var(--accent-orange), #FF5722);
             }
+
+            /* Scroll-triggered animations */
+            [data-animate] {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), 
+                            transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+                will-change: opacity, transform;
+            }
+
+            [data-animate].animate {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Optimized transition timing */
+            .transition-optimized {
+                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            }
         </noscript>
     </style>
 </head>
@@ -634,24 +665,24 @@
 
     <section id="features" class="features">
         <div class="container">
-            <h2>Key Features</h2>
+            <h2 data-animate>Key Features</h2>
             <div class="feature-grid">
-                <div class="feature-card">
+                <div class="feature-card" data-animate>
                     <i class="fas fa-seedling"></i>
                     <h3>AI Soil Analysis</h3>
                     <p>Instant crop predictions using soil chemical data or SoilLens image recognition</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" data-animate style="transition-delay: 0.1s">
                     <i class="fas fa-graduation-cap"></i>
                     <h3>AgriEdu Hub</h3>
                     <p>Comprehensive agricultural courses and expert tutorials</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" data-animate style="transition-delay: 0.2s">
                     <i class="fas fa-rupee-sign"></i>
                     <h3>Mandi Prices</h3>
                     <p>Real-time government-mandated market prices with trend analysis</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card" data-animate style="transition-delay: 0.3s">
                     <i class="fas fa-video"></i>
                     <h3>FarmTube</h3>
                     <p>Farming community videos sharing techniques & experiences</p>
@@ -691,24 +722,36 @@
             this.querySelector('i').classList.toggle('fa-times');
         });
         
-        // Smooth scrolling for anchor links
+        // Smooth scrolling for anchor links with improved performance
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 
                 const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
+                if (targetId === '#') return;
                 
-                if (targetElement) {
+                const targetElement = document.querySelector(targetId);
+                if (!targetElement) return;
+                
+                // Use requestAnimationFrame for smoother animation
+                requestAnimationFrame(() => {
                     const headerHeight = document.getElementById('main-header').offsetHeight;
                     const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
                     
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
+                    // Use smooth scrolling polyfill if needed
+                    if ('scrollBehavior' in document.documentElement.style) {
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        smoothScrollTo(targetPosition, 800);
+                    }
                     
-                    history.pushState(null, null, targetId);
+                    // Update URL without pushing to history if it's the same hash
+                    if (window.location.hash !== targetId) {
+                        history.pushState(null, null, targetId);
+                    }
                     
                     // Close mobile menu if open
                     const navMenu = document.getElementById('nav-menu');
@@ -716,19 +759,74 @@
                         navMenu.classList.remove('active');
                         document.querySelector('.menu-toggle i').classList.replace('fa-times', 'fa-bars');
                     }
-                }
+                });
             });
         });
 
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+        // Smooth scroll polyfill for older browsers
+        function smoothScrollTo(endY, duration) {
+            const startY = window.pageYOffset;
+            const distance = endY - startY;
+            const startTime = performance.now();
+            
+            function step(currentTime) {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+                const easeProgress = easeInOutCubic(progress);
+                
+                window.scrollTo(0, startY + (distance * easeProgress));
+                
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
             }
-        });
+            
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+            
+            requestAnimationFrame(step);
+        }
+
+        // Header scroll effect with optimized performance
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+        
+        window.addEventListener('scroll', function() {
+            lastScrollY = window.scrollY;
+            
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const header = document.getElementById('main-header');
+                    if (lastScrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // Scroll-triggered animations with Intersection Observer
+        function initScrollAnimations() {
+            const animateElements = document.querySelectorAll('[data-animate]');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            animateElements.forEach(el => observer.observe(el));
+        }
 
         // Create floating particles with optimized performance
         function createParticles() {
@@ -757,7 +855,7 @@
                 particle.style.top = `${Math.random() * 100 + 100}%`;
                 particle.style.animationDelay = `${delay}s`;
                 particle.style.animationDuration = `${duration}s`;
-                particle.style.willChange = 'transform, opacity'; // Optimize animations
+                particle.style.willChange = 'transform, opacity';
                 
                 fragment.appendChild(particle);
             }
@@ -768,6 +866,7 @@
         // Initialize animations when page loads
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
+            initScrollAnimations();
             
             // Animate hero elements
             const heroElements = document.querySelectorAll('.hero h1, .hero p, .download-btn');
@@ -783,6 +882,11 @@
             resizeTimeout = setTimeout(() => {
                 createParticles();
             }, 200);
+        }, { passive: true });
+
+        // Force hardware acceleration for animations
+        document.querySelectorAll('.feature-card, .download-btn, .hero-content').forEach(el => {
+            el.style.transform = 'translateZ(0)';
         });
     </script>
 </body>
