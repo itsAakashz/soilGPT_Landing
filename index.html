@@ -17,6 +17,8 @@
             --accent-orange: #FF7F3F;
             --growth-yellow: #FFD700;
             --dark-bg: #0a1f13;
+            --transition-base: cubic-bezier(0.22, 1, 0.36, 1);
+            --animation-duration: 0.4s;
         }
 
         * {
@@ -43,21 +45,21 @@
 
         /* Critical CSS - Load first */
         header {
-            padding: 15px 0;
+            padding: 1rem 0;
             background: rgba(10, 31, 19, 0.95);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(8px);
-            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-            will-change: transform;
+            transition: all var(--animation-duration) var(--transition-base);
+            will-change: transform, background, box-shadow;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 1.25rem;
         }
 
         nav {
@@ -67,21 +69,22 @@
         }
 
         .logo {
-            font-size: 24px;
+            font-size: clamp(1.25rem, 4vw, 1.5rem);
             font-weight: 700;
             color: var(--growth-yellow);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
         }
 
         .hero {
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 100px 20px 60px;
+            padding: 6rem 1.25rem 3rem;
             position: relative;
             /* Prevent layout shifts during animations */
             overflow: hidden;
@@ -89,15 +92,17 @@
 
         .hero h1 {
             font-size: clamp(2rem, 6vw, 3.5rem);
-            margin-bottom: 20px;
+            margin-bottom: 1.25rem;
+            line-height: 1.2;
         }
 
         .hero p {
             font-size: clamp(1rem, 3vw, 1.2rem);
-            margin-bottom: 40px;
+            margin-bottom: 2.5rem;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            padding: 0 1rem;
         }
 
         /* Non-critical CSS - Load after initial render */
@@ -105,12 +110,16 @@
             display: none;
             cursor: pointer;
             font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            transition: transform 0.3s ease;
         }
 
         nav ul {
             list-style: none;
             display: flex;
-            gap: 25px;
+            gap: 1.5rem;
         }
 
         nav a {
@@ -118,37 +127,43 @@
             text-decoration: none;
             font-weight: 500;
             position: relative;
-            padding: 5px 0;
+            padding: 0.3rem 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
         }
 
         .download-btns {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
         .download-btn {
             background: linear-gradient(135deg, var(--accent-orange) 0%, #FF5722 100%);
             color: #fff;
-            padding: 15px 30px;
+            padding: 1rem 1.875rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
             font-size: clamp(0.9rem, 3vw, 1.1rem);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            min-width: 200px;
+            gap: 0.5rem;
+            min-width: 12.5rem;
             justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: all var(--animation-duration) var(--transition-base);
+            will-change: transform, box-shadow;
         }
 
         /* Animations and effects */
         @media (prefers-reduced-motion: no-preference) {
             .hero-content {
                 opacity: 0;
-                transform: translateY(20px);
-                animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+                transform: translateY(1.25rem);
+                animation: fadeInUp 0.8s var(--transition-base) forwards;
             }
 
             @keyframes fadeInUp {
@@ -163,24 +178,36 @@
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
+                z-index: 1001;
             }
             
             nav ul {
-                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
                 width: 100%;
+                height: 100vh;
                 flex-direction: column;
-                gap: 15px;
-                padding: 20px 0;
-                text-align: center;
+                gap: 1.5rem;
+                padding: 5rem 1.5rem 2rem;
+                background: rgba(10, 31, 19, 0.98);
+                backdrop-filter: blur(10px);
+                transform: translateY(-100%);
+                transition: transform 0.5s var(--transition-base);
+                z-index: 1000;
             }
             
             nav ul.active {
-                display: flex;
+                transform: translateY(0);
             }
             
             .download-btns {
                 flex-direction: column;
                 align-items: center;
+            }
+
+            .hero {
+                padding: 7rem 1.25rem 3rem;
             }
         }
 
@@ -197,19 +224,19 @@
             }
 
             header.scrolled {
-                padding: 10px 0;
+                padding: 0.625rem 0;
                 background: rgba(10, 31, 19, 0.98);
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.2);
             }
 
             .logo {
-                letter-spacing: 1px;
-                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                letter-spacing: 0.05rem;
+                transition: all var(--animation-duration) var(--transition-base);
             }
 
             .logo:hover {
                 transform: scale(1.05);
-                text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+                text-shadow: 0 0 0.625rem rgba(255, 215, 0, 0.5);
             }
 
             .logo::before {
@@ -223,9 +250,13 @@
                 color: var(--accent-orange);
             }
 
+            nav a {
+                transition: color 0.3s ease;
+            }
+
             nav a:hover {
                 color: var(--accent-orange);
-                text-shadow: 0 0 8px rgba(255, 127, 63, 0.4);
+                text-shadow: 0 0 0.5rem rgba(255, 127, 63, 0.4);
             }
 
             nav a::after {
@@ -236,7 +267,7 @@
                 bottom: 0;
                 left: 0;
                 background-color: var(--accent-orange);
-                transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                transition: width var(--animation-duration) var(--transition-base);
             }
 
             nav a:hover::after {
@@ -262,40 +293,37 @@
 
             @keyframes float {
                 0%, 100% { transform: translate(0, 0); }
-                50% { transform: translate(-10px, -10px); }
+                50% { transform: translate(-0.625rem, -0.625rem); }
             }
 
             .hero h1 {
                 text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-                transition: all 0.4s ease;
+                transition: all var(--animation-duration) ease;
             }
 
             .hero h1:hover {
-                text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+                text-shadow: 0 0 0.9375rem rgba(255, 215, 0, 0.6);
             }
 
             .hero p {
                 opacity: 0.9;
-                transition: all 0.4s ease;
+                transition: all var(--animation-duration) ease;
             }
 
             .hero p:hover {
                 opacity: 1;
-                text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+                text-shadow: 0 0 0.3125rem rgba(255, 255, 255, 0.3);
             }
 
             .download-btn {
-                box-shadow: 0 10px 30px rgba(255,127,63,0.3);
+                box-shadow: 0 0.625rem 1.875rem rgba(255,127,63,0.3);
                 position: relative;
                 overflow: hidden;
-                border: none;
-                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-                will-change: transform, box-shadow;
             }
 
             .download-btn:hover {
-                transform: translateY(-5px) scale(1.03);
-                box-shadow: 0 15px 40px rgba(255,127,63,0.4);
+                transform: translateY(-0.3125rem) scale(1.03);
+                box-shadow: 0 0.9375rem 2.5rem rgba(255,127,63,0.4);
                 filter: brightness(1.1);
             }
 
@@ -307,7 +335,7 @@
                 width: 100%;
                 height: 100%;
                 background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-                transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+                transition: all 0.6s var(--transition-base);
             }
 
             .download-btn:hover::before {
@@ -315,7 +343,7 @@
             }
 
             .features {
-                padding: 80px 0;
+                padding: 5rem 0;
                 background: rgba(0,0,0,0.1);
                 position: relative;
                 overflow: hidden;
@@ -349,7 +377,7 @@
 
             .features h2 {
                 text-align: center;
-                margin-bottom: 50px;
+                margin-bottom: 3.125rem;
                 font-size: clamp(1.8rem, 5vw, 2.5rem);
                 position: relative;
                 display: inline-block;
@@ -360,61 +388,61 @@
             .features h2::after {
                 content: '';
                 position: absolute;
-                bottom: -15px;
+                bottom: -0.9375rem;
                 left: 50%;
                 transform: translateX(-50%);
-                width: 80px;
-                height: 4px;
+                width: 5rem;
+                height: 0.25rem;
                 background: linear-gradient(90deg, var(--accent-orange), var(--primary-green));
-                border-radius: 2px;
-                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                border-radius: 0.125rem;
+                transition: all var(--animation-duration) var(--transition-base);
             }
 
             .features h2:hover::after {
-                width: 100px;
-                box-shadow: 0 0 10px rgba(255, 127, 63, 0.5);
+                width: 6.25rem;
+                box-shadow: 0 0 0.625rem rgba(255, 127, 63, 0.5);
             }
 
             .feature-grid {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 25px;
-                padding: 0 15px;
+                grid-template-columns: repeat(auto-fit, minmax(15.625rem, 1fr));
+                gap: 1.5rem;
+                padding: 0 1rem;
             }
 
             .feature-card {
                 background: rgba(255,255,255,0.08);
-                padding: 30px 20px;
-                border-radius: 15px;
+                padding: 1.875rem 1.25rem;
+                border-radius: 0.9375rem;
                 text-align: center;
-                backdrop-filter: blur(12px);
+                backdrop-filter: blur(0.75rem);
                 border: 1px solid rgba(255,255,255,0.1);
-                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                transition: all var(--animation-duration) var(--transition-base);
                 cursor: default;
                 will-change: transform, box-shadow, background;
             }
 
             .feature-card:hover {
-                transform: translateY(-10px) scale(1.02);
+                transform: translateY(-0.625rem) scale(1.02);
                 background: rgba(255,255,255,0.12);
-                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                box-shadow: 0 1.25rem 2.5rem rgba(0,0,0,0.3);
             }
 
             .feature-card i {
                 font-size: 2.2rem;
-                margin-bottom: 15px;
+                margin-bottom: 0.9375rem;
                 background: linear-gradient(45deg, var(--accent-orange) 0%, var(--primary-green) 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
-                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                transition: all var(--animation-duration) var(--transition-base);
                 display: inline-block;
                 will-change: transform;
             }
 
             .feature-card:hover i {
                 transform: scale(1.2) rotate(5deg);
-                animation: bounce 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-                text-shadow: 0 0 15px rgba(255, 127, 63, 0.4);
+                animation: bounce 0.6s var(--transition-base);
+                text-shadow: 0 0 0.9375rem rgba(255, 127, 63, 0.4);
             }
 
             @keyframes bounce {
@@ -423,14 +451,14 @@
             }
 
             .feature-card h3 {
-                margin-bottom: 15px;
+                margin-bottom: 0.9375rem;
                 font-size: 1.2rem;
                 transition: all 0.3s ease;
             }
 
             .feature-card:hover h3 {
                 color: var(--growth-yellow);
-                text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+                text-shadow: 0 0 0.5rem rgba(255, 215, 0, 0.4);
             }
 
             .feature-card p {
@@ -441,14 +469,14 @@
 
             .feature-card:hover p {
                 opacity: 1;
-                transform: translateY(-2px);
+                transform: translateY(-0.125rem);
             }
 
             footer {
-                padding: 30px 0;
+                padding: 1.875rem 0;
                 background: rgba(10, 31, 19, 0.95);
                 text-align: center;
-                backdrop-filter: blur(8px);
+                backdrop-filter: blur(0.5rem);
                 border-top: 1px solid rgba(255, 255, 255, 0.05);
             }
 
@@ -471,7 +499,7 @@
 
             @keyframes floating {
                 0% { transform: translateY(0px); }
-                50% { transform: translateY(-10px); }
+                50% { transform: translateY(-0.625rem); }
                 100% { transform: translateY(0px); }
             }
 
@@ -507,113 +535,17 @@
                     opacity: 1;
                 }
                 100% {
-                    transform: translateY(-100vh) translateX(100px);
+                    transform: translateY(-100vh) translateX(6.25rem);
                     opacity: 0;
                 }
-            }
-
-            /* Mobile Menu Styles */
-            @media (max-width: 768px) {
-                nav ul {
-                    display: none;
-                    width: 100%;
-                    flex-direction: column;
-                    gap: 15px;
-                    padding: 20px 0;
-                    text-align: center;
-                }
-                
-                nav ul.active {
-                    display: flex;
-                    animation: slideDown 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-                }
-                
-                @keyframes slideDown {
-                    from {
-                        opacity: 0;
-                        transform: translateY(-20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-                
-                .hero {
-                    padding: 120px 20px 60px;
-                }
-                
-                .download-btn {
-                    width: 100%;
-                    max-width: 280px;
-                }
-                
-                .feature-grid {
-                    grid-template-columns: 1fr;
-                    max-width: 400px;
-                    margin: 0 auto;
-                }
-            }
-
-            @media (max-width: 480px) {
-                .logo {
-                    font-size: 22px;
-                }
-                
-                .hero h1 {
-                    margin-bottom: 15px;
-                }
-                
-                .hero p {
-                    margin-bottom: 30px;
-                }
-                
-                .features {
-                    padding: 60px 0;
-                }
-                
-                .feature-card {
-                    padding: 25px 15px;
-                }
-            }
-
-            /* Tablet Styles */
-            @media (min-width: 769px) and (max-width: 1024px) {
-                .feature-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-                
-                .hero h1 {
-                    font-size: 2.8rem;
-                }
-            }
-
-            /* Enhanced Scrollbar */
-            ::-webkit-scrollbar {
-                width: 10px;
-                height: 10px;
-            }
-
-            ::-webkit-scrollbar-track {
-                background: rgba(10, 31, 19, 0.2);
-            }
-
-            ::-webkit-scrollbar-thumb {
-                background: linear-gradient(var(--accent-orange), var(--primary-green));
-                border-radius: 10px;
-                transition: all 0.3s ease;
-            }
-
-            ::-webkit-scrollbar-thumb:hover {
-                background: linear-gradient(var(--accent-orange), #FF5722);
             }
 
             /* Scroll-triggered animations */
             [data-animate] {
                 opacity: 0;
-                transform: translateY(30px);
-                transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), 
-                            transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+                transform: translateY(1.875rem);
+                transition: opacity 0.6s var(--transition-base), 
+                            transform 0.6s var(--transition-base);
                 will-change: opacity, transform;
             }
 
@@ -622,9 +554,103 @@
                 transform: translateY(0);
             }
 
-            /* Optimized transition timing */
-            .transition-optimized {
-                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            /* Responsive adjustments */
+            @media (max-width: 480px) {
+                .logo {
+                    font-size: 1.2rem;
+                }
+                
+                .hero h1 {
+                    margin-bottom: 1rem;
+                }
+                
+                .hero p {
+                    margin-bottom: 1.875rem;
+                }
+                
+                .features {
+                    padding: 3.75rem 0;
+                }
+                
+                .feature-card {
+                    padding: 1.5rem 1rem;
+                }
+
+                .download-btn {
+                    min-width: 100%;
+                    padding: 0.875rem 1.25rem;
+                }
+            }
+
+            /* Tablet Styles */
+            @media (min-width: 769px) and (max-width: 1024px) {
+                .feature-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            /* Enhanced Scrollbar */
+            ::-webkit-scrollbar {
+                width: 0.625rem;
+                height: 0.625rem;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: rgba(10, 31, 19, 0.2);
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: linear-gradient(var(--accent-orange), var(--primary-green));
+                border-radius: 0.625rem;
+                transition: all 0.3s ease;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(var(--accent-orange), #FF5722);
+            }
+
+            /* Touch device optimizations */
+            @media (hover: none) {
+                .feature-card:hover {
+                    transform: none;
+                    background: rgba(255,255,255,0.08);
+                    box-shadow: none;
+                }
+                
+                .feature-card:hover i {
+                    transform: none;
+                    animation: none;
+                }
+                
+                .download-btn:hover {
+                    transform: none;
+                    box-shadow: 0 0.625rem 1.875rem rgba(255,127,63,0.3);
+                }
+                
+                nav a:hover::after {
+                    width: 0;
+                }
+            }
+
+            /* Landscape orientation adjustments */
+            @media (max-height: 500px) and (orientation: landscape) {
+                .hero {
+                    min-height: 120vh;
+                    padding: 5rem 1.25rem;
+                }
+                
+                .hero h1 {
+                    font-size: 2rem;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .hero p {
+                    margin-bottom: 1rem;
+                }
+                
+                .download-btns {
+                    margin-top: 1rem;
+                }
             }
         </noscript>
     </style>
@@ -636,9 +662,9 @@
         <div class="container">
             <nav>
                 <div class="logo">SoilGPT</div>
-                <div class="menu-toggle">
+                <button class="menu-toggle" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
-                </div>
+                </button>
                 <ul id="nav-menu">
                     <li><a href="#features">Features</a></li>
                     <li><a href="#download">Download</a></li>
@@ -716,10 +742,30 @@
         }
 
         // Mobile menu toggle functionality
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
-            document.getElementById('nav-menu').classList.toggle('active');
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+            navMenu.classList.toggle('active');
             this.querySelector('i').classList.toggle('fa-bars');
             this.querySelector('i').classList.toggle('fa-times');
+            
+            // Toggle body scroll when menu is open
+            document.body.style.overflow = isExpanded ? '' : 'hidden';
+        });
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navMenu.classList.remove('active');
+                    menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                }
+            });
         });
         
         // Smooth scrolling for anchor links with improved performance
@@ -751,13 +797,6 @@
                     // Update URL without pushing to history if it's the same hash
                     if (window.location.hash !== targetId) {
                         history.pushState(null, null, targetId);
-                    }
-                    
-                    // Close mobile menu if open
-                    const navMenu = document.getElementById('nav-menu');
-                    if (navMenu.classList.contains('active')) {
-                        navMenu.classList.remove('active');
-                        document.querySelector('.menu-toggle i').classList.replace('fa-times', 'fa-bars');
                     }
                 });
             });
@@ -813,24 +852,31 @@
         function initScrollAnimations() {
             const animateElements = document.querySelectorAll('[data-animate]');
             
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate');
-                        observer.unobserve(entry.target);
-                    }
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
                 });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            animateElements.forEach(el => observer.observe(el));
+                
+                animateElements.forEach(el => observer.observe(el));
+            } else {
+                // Fallback for browsers without IntersectionObserver
+                animateElements.forEach(el => el.classList.add('animate'));
+            }
         }
 
         // Create floating particles with optimized performance
         function createParticles() {
             const particlesContainer = document.getElementById('particles-js');
+            if (!particlesContainer) return;
+            
             const particleCount = window.innerWidth < 768 ? 15 : 30;
             
             // Clear existing particles
@@ -873,6 +919,9 @@
             heroElements.forEach((el, index) => {
                 el.style.animationDelay = `${index * 0.2}s`;
             });
+
+            // Set initial ARIA state for menu toggle
+            document.querySelector('.menu-toggle').setAttribute('aria-expanded', 'false');
         });
 
         // Handle resize events with debounce
@@ -881,13 +930,23 @@
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
                 createParticles();
+                
+                // Close menu if resizing to larger viewport
+                if (window.innerWidth > 768) {
+                    navMenu.classList.remove('active');
+                    menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                }
             }, 200);
         }, { passive: true });
 
-        // Force hardware acceleration for animations
-        document.querySelectorAll('.feature-card, .download-btn, .hero-content').forEach(el => {
-            el.style.transform = 'translateZ(0)';
-        });
+        // Touch device detection for hover effects
+        function handleFirstTouch() {
+            document.body.classList.add('touch-device');
+            window.removeEventListener('touchstart', handleFirstTouch, false);
+        }
+        window.addEventListener('touchstart', handleFirstTouch, false);
     </script>
 </body>
 </html>
