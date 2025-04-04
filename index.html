@@ -16,6 +16,7 @@
             --growth-yellow: #FFD700;
             --tech-blue: #4A90E2;
             --dark-bg: #0a1f13;
+            --scroll-behavior: smooth;
         }
 
         * {
@@ -23,6 +24,10 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -33,6 +38,7 @@
             line-height: 1.6;
             min-height: 100vh;
             overflow-x: hidden;
+            overscroll-behavior-y: contain;
         }
 
         header {
@@ -582,6 +588,26 @@
                 font-size: 2.8rem;
             }
         }
+
+        /* Enhanced Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 31, 19, 0.2);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--accent-orange), var(--primary-green));
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--accent-orange), #FF5722);
+        }
     </style>
 </head>
 <body>
@@ -660,44 +686,92 @@
             this.querySelector('i').classList.toggle('fa-times');
         });
         
-        // Smooth scrolling for anchor links
+        // Enhanced smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
                 
-                // Close mobile menu if open
-                const navMenu = document.getElementById('nav-menu');
-                if (navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    document.querySelector('.menu-toggle i').classList.replace('fa-times', 'fa-bars');
+                if (targetElement) {
+                    // Calculate the target position with offset for fixed header
+                    const headerHeight = document.getElementById('main-header').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    // Smooth scroll with easing function
+                    const startPosition = window.pageYOffset;
+                    const distance = targetPosition - startPosition;
+                    const duration = 800; // milliseconds
+                    let startTime = null;
+                    
+                    const easeInOutQuad = (t, b, c, d) => {
+                        t /= d/2;
+                        if (t < 1) return c/2*t*t + b;
+                        t--;
+                        return -c/2 * (t*(t-2) - 1) + b;
+                    };
+                    
+                    const animation = (currentTime) => {
+                        if (!startTime) startTime = currentTime;
+                        const timeElapsed = currentTime - startTime;
+                        const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+                        window.scrollTo(0, run);
+                        if (timeElapsed < duration) requestAnimationFrame(animation);
+                    };
+                    
+                    requestAnimationFrame(animation);
+                    
+                    // Update URL without jumping
+                    history.pushState(null, null, targetId);
+                    
+                    // Close mobile menu if open
+                    const navMenu = document.getElementById('nav-menu');
+                    if (navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        document.querySelector('.menu-toggle i').classList.replace('fa-times', 'fa-bars');
+                    }
                 }
             });
         });
 
-        // Header scroll effect
+        // Header scroll effect with requestAnimationFrame for smoother performance
+        let lastScrollPosition = 0;
+        let ticking = false;
+        
         window.addEventListener('scroll', function() {
-            const header = document.getElementById('main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+            lastScrollPosition = window.scrollY;
+            
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    const header = document.getElementById('main-header');
+                    if (lastScrollPosition > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         });
 
-        // Create floating particles
+        // Create floating particles with optimized performance
         function createParticles() {
             const particlesContainer = document.getElementById('particles-js');
             const particleCount = window.innerWidth < 768 ? 15 : 30;
+            
+            // Clear existing particles
+            particlesContainer.innerHTML = '';
+            
+            // Use document fragment for better performance
+            const fragment = document.createDocumentFragment();
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                // Random properties
+                // Random properties with optimized values
                 const size = Math.random() * 5 + 2;
                 const posX = Math.random() * 100;
                 const delay = Math.random() * 15;
@@ -709,14 +783,22 @@
                 particle.style.top = `${Math.random() * 100 + 100}%`;
                 particle.style.animationDelay = `${delay}s`;
                 particle.style.animationDuration = `${duration}s`;
+                particle.style.willChange = 'transform, opacity'; // Optimize animations
                 
-                particlesContainer.appendChild(particle);
+                fragment.appendChild(particle);
             }
+            
+            particlesContainer.appendChild(fragment);
         }
 
-        // Intersection Observer for scroll animations
+        // Intersection Observer with improved thresholds for scroll animations
         const animateOnScroll = function() {
             const elements = document.querySelectorAll('.feature-card, .features h2, footer');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
             
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -725,7 +807,7 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.1 });
+            }, observerOptions);
             
             elements.forEach(element => {
                 element.style.animationPlayState = 'paused';
@@ -733,16 +815,29 @@
             });
         };
 
-        // Initialize animations when page loads
-        window.addEventListener('DOMContentLoaded', () => {
+        // Initialize animations when page loads with optimized performance
+        document.addEventListener('DOMContentLoaded', () => {
             createParticles();
             animateOnScroll();
             
-            // Animate hero elements sequentially
+            // Animate hero elements sequentially with will-change optimization
             const heroElements = document.querySelectorAll('.hero h1, .hero p, .download-btn');
             heroElements.forEach((el, index) => {
+                el.style.willChange = 'transform, opacity';
                 el.style.animation = `fadeInUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) ${index * 0.2}s forwards`;
             });
+            
+            // Optimize scroll performance
+            document.body.style.willChange = 'scroll-position';
+        });
+
+        // Handle resize events with debounce for better performance
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                createParticles();
+            }, 200);
         });
     </script>
 </body>
