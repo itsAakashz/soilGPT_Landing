@@ -1,5 +1,5 @@
 {
-  "version": "1.0.3",
-  "apkUrl": "https://yourdomain.com/soilgpt.apk",
+  "version": "1.0.0",
+  "apkUrl": "https://github.com/itsAakashz/solution_challenge_proto/releases/download/release/SoilGPT_v1.0.0.apk",
   "changelog": "Bug fixes and performance improvements"
 }
