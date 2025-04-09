@@ -23,6 +23,39 @@
             --soil-brown: #8D6E63;
             --tech-blue: #4A90E2;
         }
+        .logo-container {
+      display: flex;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .logo-circle {
+      background-color: #e6f0ff; /* light blue */
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+
+    .logo-circle img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-text a {
+      text-decoration: none;
+      color: #1a0dab;
+      font-size: 13px;
+    }
+
 
         * {
             margin: 0;
@@ -1013,6 +1046,15 @@
             </nav>
         </div>
     </header>
+    <div class="logo-container">
+        <div class="logo-circle">
+          <img src="logo.png" alt="Logo">
+        </div>
+        <div class="logo-text">
+          <strong>soilgpt</strong>
+          <a href="http://soilgpt.com">http://soilgpt.com</a>
+        </div>
+      </div>
 
     <section class="hero">
         <div class="container hero-content">
