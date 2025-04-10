@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoilGPT Knowledge Hub | Articles & Guides</title>
+    <style>
+        :root {
+            --primary-green: #2d5a27;
+            --secondary-green: #88a886;
+            --accent-earth: #a68a64;
+            --background: #f9f9f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            line-height: 1.6;
+        }
+
+        .articles-header {
+            background: linear-gradient(to right, var(--primary-green), var(--secondary-green));
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        .search-bar {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 1rem;
+            border: 2px solid var(--secondary-green);
+            border-radius: 50px;
+            font-size: 1.1rem;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--accent-earth);
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-title {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .article-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .article-title a:hover {
+            text-decoration: underline;
+        }
+
+        .article-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-excerpt {
+            color: #444;
+            margin-bottom: 1rem;
+        }
+
+        .article-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: var(--secondary-green);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .article-image {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="articles-header">
+        <div class="container">
+            <h1>SoilGPT Knowledge Hub</h1>
+            <p>Explore our collection of research articles and practical guides</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search articles...">
+        </div>
+
+        <div class="articles-grid">
+            <!-- Article 1 -->
+            <article class="article-card">
+                <img src="soil-testing.jpg" alt="Soil Testing" class="article-image">
+                <div class="article-content">
+                    <h2 class="article-title">
+                        <a href="./SustainableRiceFarmingGuide.html">Step-by-Step Guide to Sustainable Rice Farming in India</a>
+                    </h2>
+                    <div class="article-meta">
+                        <span>By Aakash Gupta</span> • 
+                        <span>8 min read</span>
+                    </div>
+                    <p class="article-excerpt">Discover proven techniques for eco-friendly rice cultivation, including water conservation methods and organic pest control strategies...</p>
+                    <div class="article-tags">
+                        <span class="tag">Agriculture</span>
+                        <span class="tag">Sustainability</span>
+                        <span class="tag">India</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="article-card">
+                <img src="ai-farming.jpg" alt="AI in Agriculture" class="article-image">
+                <div class="article-content">
+                    <h2 class="article-title">
+                        <a href="/articles/ai-in-agriculture">How SoilGPT is Revolutionizing Precision Farming</a>
+                    </h2>
+                    <div class="article-meta">
+                        <span>By Raj Patel</span> • 
+                        <span>August 2023</span> • 
+                        <span>6 min read</span>
+                    </div>
+                    <p class="article-excerpt">Explore the machine learning models powering SoilGPT's predictive analytics for crop yield optimization...</p>
+                    <div class="article-tags">
+                        <span class="tag">Technology</span>
+                        <span class="tag">AI</span>
+                        <span class="tag">Research</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="article-card">
+                <img src="composting.jpg" alt="Composting" class="article-image">
+                <div class="article-content">
+                    <h2 class="article-title">
+                        <a href="/articles/organic-fertilizers">Creating Nutrient-Rich Organic Fertilizers</a>
+                    </h2>
+                    <div class="article-meta">
+                        <span>By Lina Núñez</span> • 
+                        <span>July 2023</span> • 
+                        <span>5 min read</span>
+                    </div>
+                    <p class="article-excerpt">Practical guide to making effective compost using kitchen waste and agricultural byproducts...</p>
+                    <div class="article-tags">
+                        <span class="tag">Organic Farming</span>
+                        <span class="tag">Composting</span>
+                        <span class="tag">DIY</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <div class="container">
+            <p>© 2023 SoilGPT | Open Knowledge Repository</p>
+            <nav>
+                <a href="/about">About</a> |
+                <a href="/contribute">Contribute</a> |
+                <a href="/contact">Contact</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>
