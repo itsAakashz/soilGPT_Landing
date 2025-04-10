@@ -4,59 +4,89 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SoilGPT Team</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-green: #1a472a;
+      --accent-orange: #FF7F3F;
+      --growth-yellow: #FFD700;
+      --dark-bg: #0a1f13;
+      --soil-brown: #8D6E63;
+      --tech-blue: #4A90E2;
+      --light-green: #e8f5e9;
+      --white: #ffffff;
+      --transition-base: cubic-bezier(0.22, 1, 0.36, 1);
+      --animation-duration: 0.4s;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--dark-bg) 0%, rgba(26, 71, 42, 0.95) 100%);
+      color: var(--white);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      justify-content: center;
+      padding: 20px;
       overflow: hidden;
-      text-align: center;
     }
 
     .w1 {
-      height: 350px;
-      max-width: 90%;
-      margin-bottom: 40px;
+      width: 90%;
+      max-width: 500px;
       animation: float 3s ease-in-out infinite;
+      transition: transform 0.3s ease-in-out;
     }
 
     .w1 img {
-      max-height: 100%;
-      max-width: 100%;
-      object-fit: contain;
+      width: 100%;
       border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 
     h1 {
       font-size: 3rem;
       letter-spacing: 2px;
-      color: #FFD700;
-      text-shadow: 0 0 15px #FFD700, 0 0 30px #fff;
+      color: var(--growth-yellow);
+      margin-top: 30px;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 15px var(--growth-yellow), 0 0 30px #fff;
       animation: glow 2s ease-in-out infinite alternate;
     }
 
     p {
       font-size: 1.2rem;
-      margin-top: 10px;
+      margin-top: 15px;
       color: #ccc;
+      text-align: center;
+      max-width: 600px;
+      animation: fadeIn 2s ease-in forwards;
+    }
+
+    .wave {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 150px;
+      background: url('https://svgshare.com/i/150U.svg') repeat-x;
+      background-size: cover;
+      animation: waveAnimation 10s linear infinite;
     }
 
     @keyframes float {
       0%, 100% {
-        transform: translateY(0px);
+        transform: translateY(0);
       }
       50% {
         transform: translateY(-20px);
@@ -72,13 +102,29 @@
       }
     }
 
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes waveAnimation {
+      0% { background-position-x: 0; }
+      100% { background-position-x: 1000px; }
+    }
+
     @media (max-width: 600px) {
       h1 {
         font-size: 2.2rem;
       }
 
       .w1 {
-        height: 250px;
+        max-width: 300px;
       }
     }
   </style>
@@ -90,7 +136,9 @@
   </div>
 
   <h1>COMING SOON</h1>
-  <p>We're building something magical... stay tuned!</p>
+  <p>We're building something magical with SoilGPT. Stay tuned and get ready to grow with us!</p>
+
+  <div class="wave"></div>
 
 </body>
 </html>
