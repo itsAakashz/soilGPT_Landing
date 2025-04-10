@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .w1 {
+      height: 350px;
+      max-width: 90%;
+      margin-bottom: 40px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .w1 img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      font-size: 3rem;
+      letter-spacing: 2px;
+      color: #FFD700;
+      text-shadow: 0 0 15px #FFD700, 0 0 30px #fff;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #ccc;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500;
+      }
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 40px #FFD700;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .w1 {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="w1">
+    <img src="Illustration03.jpg" alt="Coming Soon Illustration">
+  </div>
+
+  <h1>COMING SOON</h1>
+  <p>We're building something magical... stay tuned!</p>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SoilGPT Team</title>
+  <style>
+    :root {
+      --primary-green: #1a472a;
+      --accent-orange: #FF7F3F;
+      --growth-yellow: #FFD700;
+      --dark-bg: #0a1f13;
+      --soil-brown: #8D6E63;
+      --tech-blue: #4A90E2;
+      --animation-duration: 0.6s;
+      --transition-base: cubic-bezier(0.22, 1, 0.36, 1);
+      --card-radius: 20px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--dark-bg), var(--primary-green));
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px;
+      overflow-x: hidden;
+    }
+
+    .title-container {
+      background-color: var(--growth-yellow);
+      color: #000;
+      padding: 15px 30px;
+      border-radius: 25px;
+      border: 2px solid black;
+      text-align: center;
+      margin-bottom: 50px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: all var(--animation-duration) var(--transition-base);
+      animation: fadeInDown 1s ease-out forwards;
+    }
+
+    .title-container:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .title-container h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      animation: fadeInUp 1.2s ease-out forwards;
+    }
+
+    .profile-card {
+      background: #fff;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      width: 240px;
+      height: 340px;
+      transition: transform 0.6s var(--transition-base), box-shadow 0.6s var(--transition-base);
+      transform-style: preserve-3d;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+    }
+
+    .profile-card:hover {
+      transform: rotateY(8deg) rotateX(8deg) scale(1.05);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .profile-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--card-radius);
+    }
+
+    .about-button {
+      background-color: var(--tech-blue);
+      color: white;
+      padding: 8px 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .about-button:hover {
+      background-color: #3a7dd8;
+      box-shadow: 0 0 15px rgba(74, 144, 226, 0.6);
+    }
+
+    .about-card {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: var(--card-radius);
+      max-width: 400px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      animation: fadeInUp 1.5s ease-out forwards;
+    }
+    .social-links {
+  margin-top: 15px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.social-icon {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.social-icon.linkedin {
+  background: #0077b5;
+}
+.social-icon.github {
+  background: #333;
+}
+.social-icon.instagram {
+  background: #1da1f2;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+
+    .about-card p {
+      margin: 10px 0;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .profile-card {
+        width: 90%;
+        height: auto;
+      }
+
+      .about-card {
+        width: 90%;
+      }
+
+      .title-container {
+        width: 90%;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title-container">
+    <h2>Meet the Creator and Collaborators of SoilGPT</h2>
+  </div>
+
+  <div class="profile-section">
+    <div class="profile-card">
+      <img src="Snapchat-1488113617.jpg" alt="Creator/Collaborator">
+    </div>
+
+    <button class="about-button">About</button>
+
+    <div class="about-card">
+        <p><strong>Name:</strong> Adarsh Shrivastav</p>
+        <p><strong>College:</strong> Greater Noida Institute of Technology (GNIOT)</p>
+        <p><strong>Skills:</strong> Frontend, Backend, Flutter, C</p>
+        
+        <div class="social-links">
+          <a href="coming soon" target="_blank" class="social-icon linkedin">LinkedIn</a>
+          <a href="https://github.com/Adarshshrivastav991" target="_blank" class="social-icon github">GitHub</a>
+          <a href="coming soon _" target="_blank" class="social-icon instagram">instagram</a>
+        </div>
+      </div>
+
+</body>
+</html>
