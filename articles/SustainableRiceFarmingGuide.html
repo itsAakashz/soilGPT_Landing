@@ -1,214 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sustainable Rice Farming Guide | SoilGPT</title>
-    <style>
-        /* Maintain existing SoilGPT styles */
-        :root {
-            --primary-green: #2d5a27;
-            --secondary-green: #88a886;
-            --accent-earth: #a68a64;
-            --background: #f9f9f9;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sustainable Rice Farming Guide | SoilGPT</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        body {
-            background-color: var(--background);
-            line-height: 1.7;
-            color: #333;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    .article-header {
+      background: linear-gradient(to right bottom, #2d5a27, #88a886);
+      color: white;
+      text-align: center;
+      padding: 5rem 1rem;
+      margin-bottom: 2rem;
+    }
 
-        .article-header {
-            background: linear-gradient(to right bottom, var(--primary-green), var(--secondary-green));
-            color: white;
-            padding: 4rem 1rem;
-            text-align: center;
-        }
+    .article-container {
+      max-width: 900px;
+      margin: auto;
+      padding: 0 1.5rem;
+    }
 
-        .article-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 20px;
-        }
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+    }
 
-        h2 {
-            color: var(--primary-green);
-            margin: 2.5rem 0 1.5rem;
-            border-bottom: 2px solid var(--accent-earth);
-            padding-bottom: 0.5rem;
-        }
+    h2 {
+      margin-top: 2.5rem;
+      color: #2d5a27;
+      border-bottom: 2px solid #a68a64;
+      padding-bottom: 0.5rem;
+    }
 
-        .step-card {
-            background: white;
-            padding: 2rem;
-            margin: 2rem 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+    h3 {
+      margin-top: 1.5rem;
+      color: #2d5a27;
+    }
 
-        .step-number {
-            font-size: 1.8rem;
-            color: var(--accent-earth);
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
+    p, li {
+      margin: 0.6rem 0;
+      line-height: 1.6;
+    }
 
-        .why-how-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 1rem 0;
-        }
+    ul {
+      margin-left: 1.5rem;
+    }
 
-        .why-box, .how-box {
-            padding: 1rem;
-            border-left: 4px solid var(--secondary-green);
-            background: #f8f8f8;
-        }
+    .step-title {
+      font-weight: bold;
+      margin-top: 1rem;
+    }
 
-        .case-study {
-            background: #fff;
-            padding: 2rem;
-            border: 2px solid var(--accent-earth);
-            margin: 2rem 0;
-            border-radius: 8px;
-        }
+    blockquote {
+      border-left: 4px solid #a68a64;
+      background-color: #f0f0f0;
+      padding: 1rem 1.5rem;
+      font-style: italic;
+      margin: 2rem 0;
+    }
 
-        .tool-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
+    .highlight-box {
+      background: #fff;
+      border-left: 4px solid #88a886;
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+    }
 
-        .tool-card {
-            padding: 1rem;
-            text-align: center;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+    .diagram, .image {
+      display: block;
+      margin: 2rem auto;
+      max-width: 100%;
+    }
 
-        @media (max-width: 768px) {
-            .article-container {
-                padding: 1rem;
-            }
-            
-            .step-card {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header class="article-header">
-        <div class="article-container">
-            <h1>Sustainable Rice Farming in India</h1>
-            <p>A Step-by-Step Guide for Eco-Friendly Cultivation</p>
-        </div>
-    </header>
 
+  <header class="article-header">
     <div class="article-container">
-        <div class="toc">
-            <h2>Table of Contents</h2>
-            <ul>
-                <li><a href="#land-prep">1. Land Preparation</a></li>
-                <li><a href="#seed-selection">2. Seed Selection & Treatment</a></li>
-                <li><a href="#planting">3. Planting Methods</a></li>
-                <li><a href="#nutrients">4. Nutrient Management</a></li>
-                <li><a href="#pest-control">5. Pest & Disease Control</a></li>
-                <li><a href="#water">6. Water Conservation</a></li>
-                <li><a href="#harvest">7. Harvest & Post-Harvest</a></li>
-                <li><a href="#case-study">8. ZBNF Case Study</a></li>
-            </ul>
-        </div>
-
-        <section id="land-prep">
-            <div class="step-card">
-                <div class="step-number">1. Land Preparation</div>
-                <h3>Building a Healthy Foundation</h3>
-                
-                <div class="why-how-grid">
-                    <div class="why-box">
-                        <h4>Soil Testing</h4>
-                        <p><strong>Why?</strong> Assess soil pH, nutrients (N-P-K), and organic carbon</p>
-                        <p><strong>Outcome:</strong> Customize fertilizer and lime application</p>
-                    </div>
-                    <div class="how-box">
-                        <h4>Implementation</h4>
-                        <ul>
-                            <li>Use Soil Health Cards (₹50-100/test)</li>
-                            <li>Laser leveling (₹1,000–1,500/acre)</li>
-                            <li>Green manuring with dhaincha</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Repeat step-card pattern for other sections -->
-
-        <section id="case-study">
-            <div class="case-study">
-                <h2>Zero-Budget Natural Farming (ZBNF)</h2>
-                <h3>Andhra Pradesh Success Story</h3>
-                <div class="why-how-grid">
-                    <div>
-                        <h4>Steps</h4>
-                        <ol>
-                            <li>Seed treatment with Bijamrita</li>
-                            <li>Soil inoculation every 15 days</li>
-                            <li>Mulching with dried leaves</li>
-                        </ol>
-                    </div>
-                    <div>
-                        <h4>Results</h4>
-                        <ul>
-                            <li>Yield: 4.2 tons/hectare</li>
-                            <li>Cost reduction: ₹15k → ₹4.5k/acre</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="tool-grid">
-            <div class="tool-card">
-                <h4>Essential Tools</h4>
-                <ul>
-                    <li>Cono-weeders (₹2,500)</li>
-                    <li>Seed drills (₹50-70k)</li>
-                    <li>Solar pumps</li>
-                </ul>
-            </div>
-            <div class="tool-card">
-                <h4>Government Schemes</h4>
-                <ul>
-                    <li>PM-KUSUM</li>
-                    <li>PKVY (₹50k/ha)</li>
-                    <li>Paramparagat Krishi</li>
-                </ul>
-            </div>
-        </section>
-
-        <div class="cta-section">
-            <h2>Start Your Sustainable Journey</h2>
-            <p>Download our complete rice farming handbook</p>
-            <a href="/download" class="button">Get PDF Guide</a>
-        </div>
+      <h1>In-Depth Step-by-Step Guide to Sustainable Rice Farming in India</h1>
+      <p>Eco-Friendly, Profitable & Science-Backed Techniques for Indian Farmers</p>
     </div>
+  </header>
 
-    <footer class="article-footer">
-        <div class="article-container">
-            <p>© 2023 SoilGPT | Sustainable Agriculture Initiative</p>
-            <nav>
-                <a href="/research">More Guides</a> |
-                <a href="/calculator">Yield Calculator</a> |
-                <a href="/expert">Consult Experts</a>
-            </nav>
-        </div>
-    </footer>
+  <main class="article-container">
+    <section>
+      <h2>1. Land Preparation: Building a Healthy Foundation</h2>
+      <div class="step-title">Step 1: Soil Testing</div>
+      <ul>
+        <li><strong>Why?</strong> Assess soil pH, nutrients, and carbon content.</li>
+        <li><strong>How?</strong> Use Soil Health Cards or private labs.</li>
+        <li><strong>Outcome:</strong> Targeted fertilizer/lime application (e.g., lime if pH &lt; 5.5).</li>
+      </ul>
+
+      <div class="step-title">Step 2: Laser Land Leveling</div>
+      <p>Ensures uniform water spread; cuts water use by 20–25%. Cost: ₹1,000–1,500/acre.</p>
+
+      <div class="step-title">Step 3: Green Manuring</div>
+      <p>Grow <em>dhaincha</em> or sunn hemp for 45–60 days, then plow into soil to enrich nitrogen.</p>
+    </section>
+
+    <section>
+      <h2>2. Seed Selection & Treatment</h2>
+      <div class="step-title">Step 4: Choose Climate-Resilient Varieties</div>
+      <ul>
+        <li><strong>Drought:</strong> Sahbhagi Dhan</li>
+        <li><strong>Floods:</strong> CR Dhan 801</li>
+        <li><strong>Organic:</strong> Kalanamak, Govind Bhog</li>
+      </ul>
+
+      <div class="step-title">Step 5: Seed Treatment</div>
+      <p><strong>Bio-Priming:</strong> Azospirillum (20 g/kg seeds, soak for 12 hours)</p>
+      <p><strong>Neem Oil:</strong> 5 ml/L water to deter pests</p>
+    </section>
+
+    <section>
+      <h2>3. Planting: SRI vs. DSR Methods</h2>
+      <h3>Option A: System of Rice Intensification (SRI)</h3>
+      <ul>
+        <li><strong>Nursery:</strong> Use 8–12 day old seedlings</li>
+        <li><strong>Spacing:</strong> 25x25 cm, single plant/hill</li>
+        <li><strong>AWD:</strong> Flood → dry till cracks → re-flood (30–40% water savings)</li>
+      </ul>
+
+      <h3>Option B: Direct-Seeded Rice (DSR)</h3>
+      <ul>
+        <li><strong>Dry/Wet DSR:</strong> Drill or sow pre-germinated seeds</li>
+        <li><strong>Seed Rate:</strong> 8–10 kg/acre</li>
+        <li><strong>Weeds:</strong> Use Pendimethalin or straw mulch</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Nutrient Management</h2>
+      <ul>
+        <li><strong>Basal Dose:</strong> 5T compost + 2T vermicompost OR half NPK + half organic</li>
+        <li><strong>Top Dressing:</strong> Neem-coated urea (30–40 kg/acre)</li>
+        <li><strong>Biofertilizer:</strong> Azotobacter spray at panicle stage</li>
+        <li><strong>In Situ:</strong> Grow Azolla for 30–40 kg N/acre</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. Pest & Disease Control (IPM)</h2>
+      <ul>
+        <li><strong>Cultural:</strong> Trap crops (marigold, sesame), BPH-resistant rice</li>
+        <li><strong>Biological:</strong> Trichogramma (4 cards/acre), neem oil, <em>Beauveria</em></li>
+        <li><strong>Mechanical:</strong> Solar light traps (1/acre)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. Water Conservation Techniques</h2>
+      <ul>
+        <li><strong>Drip/Sprinkler:</strong> For upland rice</li>
+        <li><strong>Solar Pumps:</strong> PM-KUSUM scheme (60% subsidy)</li>
+        <li><strong>Farm Ponds:</strong> 20×20×3 m for storing monsoon runoff</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7. Harvesting & Post-Harvest</h2>
+      <ul>
+        <li><strong>Harvest:</strong> At 20–25% grain moisture</li>
+        <li><strong>Happy Seeder:</strong> Direct wheat sowing in rice residue</li>
+        <li><strong>Straw Composting:</strong> Add Trichoderma for faster breakdown</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>8. Crop Rotation & Diversification</h2>
+      <ul>
+        <li><strong>Pulses:</strong> Moong or masoor post-rice to fix nitrogen</li>
+        <li><strong>Integrated Farming:</strong> Rice-fish culture in waterlogged areas (₹30,000/acre income)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Case Study: ZBNF in Andhra Pradesh</h2>
+      <ul>
+        <li><strong>Seed:</strong> Bijamrita coating</li>
+        <li><strong>Soil:</strong> Jeevamrita every 15 days</li>
+        <li><strong>Mulch:</strong> Straw/leaves for moisture retention</li>
+        <li><strong>Intercrop:</strong> Pigeon pea or sesame for pest control</li>
+      </ul>
+
+      <blockquote>
+        "Yield rose to 4.2 tons/hectare; costs dropped from ₹15,000 to ₹4,500/acre"
+      </blockquote>
+    </section>
+
+    <section>
+      <h2>Tools & Government Schemes</h2>
+      <ul>
+        <li><strong>Tools:</strong> Cono-weeders, seed drills, solar pumps</li>
+        <li><strong>Subsidies:</strong> PKVY, Paramparagat Krishi Vikas Yojana</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Conclusion</h2>
+      <p>Sustainable rice farming blends traditional wisdom with modern science. With SRI/DSR, organic practices, and tech like SoilGPT, farmers can achieve up to <strong>30% higher profits</strong> while protecting our environment.</p>
+      <p><strong>Sustainable rice isn’t just a crop—it’s a commitment to future generations. 🌾</strong></p>
+    </section>
+  </main>
+
+  <footer class="article-footer">
+    <div class="article-container">
+      <p>© 2023 SoilGPT</p>
+      <nav>
+        <a href="/research">Research Papers</a> |
+        <a href="/team">Our Team</a> |
+        <a href="/contact">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
 </body>
 </html>
