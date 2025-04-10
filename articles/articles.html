@@ -4,77 +4,310 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SoilGPT Knowledge Hub | Articles & Guides</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-green: #2d5a27;
-            --secondary-green: #88a886;
-            --accent-earth: #a68a64;
-            --background: #f9f9f9;
+            --primary-green: #1a472a;
+            --accent-orange: #FF7F3F;
+            --growth-yellow: #FFD700;
+            --dark-bg: #0a1f13;
+            --soil-brown: #8D6E63;
+            --tech-blue: #4A90E2;
+            --light-green: #e8f5e9;
+            --white: #ffffff;
+            --transition-base: cubic-bezier(0.22, 1, 0.36, 1);
+            --animation-duration: 0.4s;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--background);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, rgba(26, 71, 42, 0.95) 100%);
+            color: var(--white);
             line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .articles-header {
-            background: linear-gradient(to right, var(--primary-green), var(--secondary-green));
-            color: white;
-            padding: 4rem 1rem;
+        /* Header Styles */
+        header {
+            padding: 1.5rem 0;
+            background: rgba(10, 31, 19, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            transition: all var(--animation-duration) var(--transition-base);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header.scrolled {
+            padding: 1rem 0;
+            background: rgba(10, 31, 19, 0.98);
+            box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.2);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            color: var(--growth-yellow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            opacity: 0.9;
+        }
+
+        .nav-link:hover {
+            color: var(--growth-yellow);
+            opacity: 1;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--growth-yellow);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .articles-hero {
+            padding: 10rem 2rem 6rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-bg));
+            margin-top: 60px;
         }
 
+        .articles-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .articles-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+
+        .articles-hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+            position: relative;
+        }
+
+        /* Main Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem 20px;
+            padding: 0 2rem;
+        }
+
+        /* Search Section */
+        .search-section {
+            margin: 3rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .search-section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .search-bar {
-            margin: 2rem 0;
-            text-align: center;
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .search-input {
             width: 100%;
-            max-width: 600px;
-            padding: 1rem;
-            border: 2px solid var(--secondary-green);
+            padding: 1.2rem 1.5rem 1.2rem 3.5rem;
+            border: none;
             border-radius: 50px;
             font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            color: var(--white);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--growth-yellow);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Articles Section */
+        .articles-section {
+            margin: 5rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+        }
+
+        .articles-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--growth-yellow);
+            border-radius: 2px;
         }
 
         .articles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
 
         .article-card {
-            background: white;
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s var(--transition-base);
+            position: relative;
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--growth-yellow);
+            transition: height 0.6s ease;
         }
 
         .article-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .article-card:hover::before {
+            height: 100%;
+        }
+
+        .article-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
         }
 
         .article-image {
             width: 100%;
-            height: 200px;
+            height: 100%;
             object-fit: cover;
-            border-bottom: 3px solid var(--accent-earth);
+            transition: transform 0.6s ease;
+        }
+
+        .article-card:hover .article-image {
+            transform: scale(1.05);
         }
 
         .article-content {
@@ -82,9 +315,10 @@
         }
 
         .article-title {
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+            color: var(--white);
+            transition: color 0.3s ease;
         }
 
         .article-title a {
@@ -92,19 +326,28 @@
             text-decoration: none;
         }
 
-        .article-title a:hover {
-            text-decoration: underline;
+        .article-card:hover .article-title {
+            color: var(--growth-yellow);
         }
 
         .article-meta {
-            color: #666;
-            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .article-meta i {
+            margin-right: 0.3rem;
+            color: var(--growth-yellow);
         }
 
         .article-excerpt {
-            color: #444;
-            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
         }
 
         .article-tags {
@@ -114,110 +357,499 @@
         }
 
         .tag {
-            background: var(--secondary-green);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
             font-size: 0.8rem;
+            transition: all 0.3s ease;
         }
 
-        @media (max-width: 768px) {
-            .articles-grid {
+        .article-card:hover .tag {
+            background: var(--growth-yellow);
+            color: var(--primary-green);
+        }
+
+        /* Featured Article */
+        .featured-article {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .featured-article .article-image-container {
+            height: 300px;
+        }
+
+        .featured-article .article-title {
+            font-size: 1.8rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-bg));
+            color: var(--white);
+            border-radius: 12px;
+            margin: 5rem 0;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+        }
+
+        .cta-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 8s infinite linear;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .cta-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--growth-yellow);
+            border-radius: 2px;
+        }
+
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--white);
+            color: var(--primary-green);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-top: 1rem;
+            font-weight: 600;
+            transition: all 0.4s var(--transition-base);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.3) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover::after {
+            transform: translateX(100%);
+        }
+
+        .cta-button i {
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--white);
+            position: relative;
+            margin-top: 5rem;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-green), var(--growth-yellow));
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .footer-link:hover {
+            color: var(--growth-yellow);
+            opacity: 1;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--growth-yellow);
+            color: var(--primary-green);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .articles-hero h1 {
+                font-size: 3rem;
+            }
+            
+            .featured-article {
                 grid-template-columns: 1fr;
             }
             
-            .article-image {
-                height: 150px;
+            .featured-article .article-image-container {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .articles-hero {
+                padding: 8rem 1.5rem 4rem;
+            }
+
+            .articles-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .articles-hero h1 {
+                font-size: 2rem;
+            }
+
+            .articles-hero p {
+                font-size: 1rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <header class="articles-header">
-        <div class="container">
-            <h1>SoilGPT AgriEdu</h1>
-            <p>Explore our collection of research articles and practical guides</p>
+    <!-- Header with Navigation -->
+    <header id="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">🌱</span>
+                <span>SoilGPT</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#" class="nav-link">Articles</a>
+                <a href="#" class="nav-link">Guides</a>
+                <a href="#" class="nav-link">Research</a>
+            </nav>
         </div>
     </header>
 
+    <!-- Hero Section -->
+    <section class="articles-hero">
+        <h1>SoilGPT AgriEdu</h1>
+        <p>Explore our collection of research articles and practical guides</p>
+    </section>
+
     <div class="container">
-        <div class="search-bar">
-            <input type="text" class="search-input" placeholder="Search articles...">
-        </div>
+        <!-- Search Section -->
+        <section class="search-section" id="search">
+            <div class="search-bar">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search articles...">
+            </div>
+        </section>
 
-        <div class="articles-grid">
-            <!-- Article 1 -->
-            <article class="article-card">
-                <img src="https://img.etimg.com/thumb/msid-102258636,width-300,height-225,imgsize-380876,resizemode-75/farm-labourers-plant-rice-saplings-in-a-field-on-outskirts-of-ahmedabad.jpg" alt="Background" class="article-image">
-                <div class="article-content">
-                    <h2 class="article-title">
-                        <a href="./SustainableRiceFarmingGuide.html">Step-by-Step Guide to Sustainable Rice Farming in India</a>
-                    </h2>
-                    <div class="article-meta">
-                        <span>By Aakash Gupta</span> • 
-                        <span>8 min read</span>
+        <!-- Articles Section -->
+        <section class="articles-section" id="articles">
+            <h2 class="section-title">Featured Articles</h2>
+            <div class="articles-grid">
+                <!-- Featured Article -->
+                <article class="article-card featured-article">
+                    <div class="article-image-container">
+                        <img src="https://img.etimg.com/thumb/msid-102258636,width-300,height-225,imgsize-380876,resizemode-75/farm-labourers-plant-rice-saplings-in-a-field-on-outskirts-of-ahmedabad.jpg" alt="Sustainable Rice Farming" class="article-image">
                     </div>
-                    <p class="article-excerpt">Discover proven techniques for eco-friendly rice cultivation, including water conservation methods and organic pest control strategies...</p>
-                    <div class="article-tags">
-                        <span class="tag">Agriculture</span>
-                        <span class="tag">Sustainability</span>
-                        <span class="tag">India</span>
+                    <div class="article-content">
+                        <h2 class="article-title">
+                            <a href="./SustainableRiceFarmingGuide.html">Step-by-Step Guide to Sustainable Rice Farming in India</a>
+                        </h2>
+                        <div class="article-meta">
+                            <span><i class="fas fa-user"></i> Aakash Gupta</span>
+                            <span><i class="fas fa-clock"></i> 8 min read</span>
+                        </div>
+                        <p class="article-excerpt">Discover proven techniques for eco-friendly rice cultivation, including water conservation methods and organic pest control strategies tailored for Indian agricultural conditions.</p>
+                        <div class="article-tags">
+                            <span class="tag">Agriculture</span>
+                            <span class="tag">Sustainability</span>
+                            <span class="tag">India</span>
+                        </div>
                     </div>
-                </div>
-            </article>
+                </article>
 
-            <!-- Article 2 -->
-            <article class="article-card">
-                <img src="../assets/background.jpg" alt="AI in Agriculture" class="article-image">
-                <div class="article-content">
-                    <h2 class="article-title">
-                        <a href="../articles/AlternativesToChemicalFertilizers.html">In-Depth Guide to Alternatives to Chemical Fertilizers for Indian Farmers: Boosting Soil Health Sustainably</a>
-                    </h2>
-                    <div class="article-meta">
-                        <span>Aakash Gupta</span> • 
-                        <span>6 min read</span>
+                <!-- Article 2 -->
+                <article class="article-card">
+                    <div class="article-image-container">
+                        <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="AI in Agriculture" class="article-image">
                     </div>
-                    <p class="article-excerpt">Explore the machine learning models powering SoilGPT's predictive analytics for crop yield optimization...</p>
-                    <div class="article-tags">
-                        <span class="tag">Technology</span>
-                        <span class="tag">AI</span>
-                        <span class="tag">Research</span>
+                    <div class="article-content">
+                        <h2 class="article-title">
+                            <a href="../articles/AlternativesToChemicalFertilizers.html">Alternatives to Chemical Fertilizers for Indian Farmers</a>
+                        </h2>
+                        <div class="article-meta">
+                            <span><i class="fas fa-user"></i> Aakash Gupta</span>
+                            <span><i class="fas fa-clock"></i> 6 min read</span>
+                        </div>
+                        <p class="article-excerpt">Comprehensive guide to boosting soil health sustainably with organic alternatives to chemical fertilizers, specifically designed for Indian farming conditions.</p>
+                        <div class="article-tags">
+                            <span class="tag">Organic Farming</span>
+                            <span class="tag">Soil Health</span>
+                            <span class="tag">India</span>
+                        </div>
                     </div>
-                </div>
-            </article>
+                </article>
 
-            <!-- Article 3 -->
-            <!-- <article class="article-card">
-                <img src="composting.jpg" alt="Composting" class="article-image">
-                <div class="article-content">
-                    <h2 class="article-title">
-                        <a href="/articles/organic-fertilizers">Creating Nutrient-Rich Organic Fertilizers</a>
-                    </h2>
-                    <div class="article-meta">
-                        <span>By Lina Núñez</span> • 
-                        <span>July 2023</span> • 
-                        <span>5 min read</span>
+                <!-- Article 3 -->
+                <article class="article-card">
+                    <div class="article-image-container">
+                        <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Composting" class="article-image">
                     </div>
-                    <p class="article-excerpt">Practical guide to making effective compost using kitchen waste and agricultural byproducts...</p>
-                    <div class="article-tags">
-                        <span class="tag">Organic Farming</span>
-                        <span class="tag">Composting</span>
-                        <span class="tag">DIY</span>
+                    <div class="article-content">
+                        <h2 class="article-title">
+                            <a href="#">Creating Nutrient-Rich Organic Fertilizers</a>
+                        </h2>
+                        <div class="article-meta">
+                            <span><i class="fas fa-user"></i> Adarsh Shrivastav</span>
+                            <span><i class="fas fa-clock"></i> 5 min read</span>
+                        </div>
+                        <p class="article-excerpt">Practical guide to making effective compost using kitchen waste and agricultural byproducts, with techniques optimized for small-scale Indian farmers.</p>
+                        <div class="article-tags">
+                            <span class="tag">Composting</span>
+                            <span class="tag">Organic</span>
+                            <span class="tag">DIY</span>
+                        </div>
                     </div>
-                </div>
-            </article> -->
-        </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section" id="join-us">
+            <h2>Want to Contribute Your Knowledge?</h2>
+            <p>Join our community of agriculture experts and share your research and practical guides</p>
+            <a href="#" class="cta-button">
+                <i class="fas fa-pen-alt"></i> Submit Article
+            </a>
+        </section>
     </div>
 
-    <footer class="article-footer">
-        <div class="container">
-            <p>© 2023 SoilGPT | Open Knowledge Repository</p>
-            <nav>
-                <a href="/about">About</a> |
-                <a href="/contribute">Contribute</a> |
-                <a href="/contact">Contact</a>
-            </nav>
+    <!-- Footer -->
+    <footer>
+        <a href="/" class="footer-logo">SoilGPT</a>
+        <!-- <div class="footer-links">
+            <a href="#" class="footer-link">About</a>
+            <a href="#" class="footer-link">Contribute</a>
+            <a href="#" class="footer-link">Contact</a>
+            <a href="#" class="footer-link">Privacy</a>
+            <a href="#" class="footer-link">Terms</a>
         </div>
+        <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div> -->
+        <p class="copyright">© 2023 SoilGPT. Cultivating the future of sustainable agriculture.</p>
     </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.search-section, .articles-section, .cta-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const articles = document.querySelectorAll('.article-card');
+            
+            articles.forEach(article => {
+                const title = article.querySelector('.article-title').textContent.toLowerCase();
+                const excerpt = article.querySelector('.article-excerpt').textContent.toLowerCase();
+                const tags = Array.from(article.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+                
+                if (title.includes(searchTerm) || excerpt.includes(searchTerm) || tags.some(tag => tag.includes(searchTerm))) {
+                    article.style.display = 'block';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
